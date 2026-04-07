@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+const sites = [
+    { nome: "google", url: "www.google.com" },
+    { nome: "bing", url: "www.bing.com" },
+    { nome: "yahoo", url: "www.yahoo.com" }
+];
+
+function teste() {
+    const tb = document.getElementById("tb");
+    
+    // Limpamos o tbody antes de adicionar para não duplicar se clicar duas vezes
+    tb.innerHTML = ""; 
+
+    // Percorremos nossa lista de objetos
+    sites.forEach(function(site) {
+        // 1. Criamos o objeto do tipo linha (tr)
+        const tr = document.createElement("tr");
+
+        // 2. Criamos os objetos do tipo célula (td)
+        const tdNome = document.createElement("td");
+        const tdUrl = document.createElement("td");
+
+        // 3. Adicionamos o texto (conteúdo) dentro de cada td
+        tdNome.textContent = site.nome;
+        tdUrl.textContent = site.url;
+
+        // 4. Colocamos (anexamos) as células <td> dentro da linha <tr>
+        tr.appendChild(tdNome);
+        tr.appendChild(tdUrl);
+
+        // 5. Finalmente, colocamos a linha <tr> pronta dentro do <tbody>
+        tb.appendChild(tr);
+    });
+}
+</script>
+</head>
+<body>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>site</th>
+            <th>url</th>
+        </tr>
+    </thead>
+    <tbody id="tb">
+    </tbody>
+</table>
+
+<input type="button" onclick="teste()" value="Carregar Sites">
+
+</body>
+</html>
