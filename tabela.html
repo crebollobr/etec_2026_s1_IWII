@@ -1,0 +1,25 @@
+<html>
+<head>
+<script>
+function teste(){
+	const tb = document.getElementById("tb")
+	let str = "<tr><td>google</td><td>www.google.com</td></tr>"
+	str = str + "<tr><td>oracle</td><td>www.oracle.com</td></tr>"
+	tb.innerHTML = str
+}
+</script>
+</head>
+<body>
+<table>
+<thead>
+<tr>
+	<td>site</td>
+	<td>url</td>
+</tr>
+</thead>
+<tbody id="tb">
+</tbody>
+</table>
+<input type="button" onclick="teste()" value="teste">
+</body>
+</html>
