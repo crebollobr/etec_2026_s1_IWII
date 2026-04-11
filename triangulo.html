@@ -58,9 +58,9 @@
             }
 
             // VALIDAÇÃO 3: Condição de existência do triângulo
-            // A soma de dois lados tem que ser sempre maior que o terceiro
+            // A soma de dois lados tem que ser sempre menor ou igual que o terceiro
             if ((a + b <= c) || (a + c <= b) || (b + c <= a)) {
-                alert("Erro: Essas medidas não podem formar um triângulo. A soma de dois lados deve ser maior que o terceiro.");
+                alert("Erro: Essas medidas não podem formar um triângulo. A soma de dois lados deve ser menor ou igual que o terceiro.");
                 return;
             }
 
