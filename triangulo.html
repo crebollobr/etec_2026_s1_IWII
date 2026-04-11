@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificador de Triângulos</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .input-group { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Classificador de Triângulos</h2>
+
+    <div class="input-group">
+        <label>Lado A:</label>
+        <input type="number" id="ladoA" placeholder="Digite o lado A">
+    </div>
+    <div class="input-group">
+        <label>Lado B:</label>
+        <input type="number" id="ladoB" placeholder="Digite o lado B">
+    </div>
+    <div class="input-group">
+        <label>Lado C:</label>
+        <input type="number" id="ladoC" placeholder="Digite o lado C">
+    </div>
+
+    <button onclick="classificarTriangulo()">Classificar</button>
+
+    <div class="input-group" style="margin-top: 20px;">
+        <label>Resultado:</label>
+        <input type="text" id="resultado" readonly placeholder="Aguardando...">
+    </div>
+
+    <script>
+        function classificarTriangulo() {
+            // 1. Captura o elemento de resultado
+            const inputResultado = document.getElementById('resultado');
+            
+            // 2. A grande sacada: Limpa o resultado anterior ANTES de qualquer validação!
+            inputResultado.value = ""; 
+
+            // 3. Captura e converte os valores dos inputs para números decimais (float)
+            const a = parseFloat(document.getElementById('ladoA').value);
+            const b = parseFloat(document.getElementById('ladoB').value);
+            const c = parseFloat(document.getElementById('ladoC').value);
+
+            // VALIDAÇÃO 1: Campos vazios (NaN - Not a Number)
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                alert("Erro: Por favor, preencha todos os três lados com números válidos.");
+                return; // O 'return' para a execução da função aqui
+            }
+
+            // VALIDAÇÃO 2: Lados negativos ou zero
+            if (a <= 0 || b <= 0 || c <= 0) {
+                alert("Erro: As medidas dos lados devem ser maiores que zero.");
+                return;
+            }
+
+            // VALIDAÇÃO 3: Condição de existência do triângulo
+            // A soma de dois lados tem que ser sempre maior que o terceiro
+            if ((a + b <= c) || (a + c <= b) || (b + c <= a)) {
+                alert("Erro: Essas medidas não podem formar um triângulo. A soma de dois lados deve ser maior que o terceiro.");
+                return;
+            }
+
+            // 4. CLASSIFICAÇÃO (Caminho Feliz)
+            if (a === b && b === c) {
+                inputResultado.value = "Triângulo Equilátero";
+            } else if (a === b || a === c || b === c) {
+                inputResultado.value = "Triângulo Isósceles";
+            } else {
+                inputResultado.value = "Triângulo Escaleno";
+            }
+        }
+    </script>
+</body>
+</html>
