@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor Simples</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        
+        /* Estilo para a nossa barra de ferramentas */
+        .toolbar { margin-bottom: 10px; }
+        .toolbar button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        
+        /* O botão fica com visual "apagado" quando desabilitado */
+        .toolbar button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Estilizando a div para ela parecer um textarea */
+        #editor {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none; /* Remove a borda azul feia ao clicar */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <button id="btnNegrito" disabled>Negrito</button>
+        <button id="btnAumentar" disabled>Aumentar Fonte +</button>
+        <button id="btnDiminuir" disabled>Diminuir Fonte -</button>
+    </div>
+
+    <div id="editor" contenteditable="true">
+        Escreva e selecione um texto aqui...
+    </div>
+
+</body>
+<script>
+// 1. Pegamos as referências dos elementos
+const editor = document.getElementById('editor');
+const btnNegrito = document.getElementById('btnNegrito');
+const btnAumentar = document.getElementById('btnAumentar');
+const btnDiminuir = document.getElementById('btnDiminuir');
+
+// O execCommand usa tamanhos de fonte de 1 a 7 (3 é o padrão)
+let tamanhoAtual = 3;
+
+// 2. Lógica para habilitar/desabilitar botões ao selecionar texto
+document.addEventListener('selectionchange', () => {
+    // Pega o texto que o usuário selecionou na tela
+    const selecao = window.getSelection();
+    
+    // Verifica se a seleção não está vazia E se o texto selecionado está dentro do nosso editor
+    const temTextoSelecionado = selecao.toString().length > 0;
+    const estaNoEditor = editor.contains(selecao.anchorNode);
+
+    if (temTextoSelecionado && estaNoEditor) {
+        btnNegrito.disabled = false;
+        btnAumentar.disabled = false;
+        btnDiminuir.disabled = false;
+    } else {
+        btnNegrito.disabled = true;
+        btnAumentar.disabled = true;
+        btnDiminuir.disabled = true;
+    }
+});
+
+// 3. Ações dos botões (Usamos mousedown com preventDefault para o texto não perder a seleção ao clicar no botão)
+btnNegrito.addEventListener('mousedown', (e) => {
+    e.preventDefault(); // Evita que o editor perca o foco
+    document.execCommand('bold', false, null);
+});
+
+btnAumentar.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    if (tamanhoAtual < 7) {
+        tamanhoAtual++;
+        document.execCommand('fontSize', false, tamanhoAtual);
+    }
+});
+
+btnDiminuir.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    if (tamanhoAtual > 1) {
+        tamanhoAtual--;
+        document.execCommand('fontSize', false, tamanhoAtual);
+    }
+});
+</script>
+</html>
