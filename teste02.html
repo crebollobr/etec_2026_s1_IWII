@@ -1,0 +1,33 @@
+<script>
+async function buscarUsuarioExemplo(id_valor) {
+    
+    // 1º ALERTA: Executa na hora.
+    alert("Passo 1: Antes do fetch (O pedido vai começar)");
+
+    try {
+        // O "await" PAUSA a execução DESSA função aqui até a resposta chegar
+        const resposta = await fetch(`https://jsonplaceholder.typicode.com/users/${id_valor}`);
+        const dados = await resposta.json();
+
+        // 3º ALERTA: Diferente do modelo anterior, o código SÓ CHEGA AQUI quando a internet responder!
+        alert("Passo 3: Depois do await (A resposta finalmente chegou!)");
+        
+        if (dados.id) {
+             alert("Preenchendo dados de: " + dados.name);
+        } else {
+            alert("Usuário não encontrado.");
+        }
+    } catch (erro) {
+        alert("Erro na requisição.");
+    }
+
+    // 2º ALERTA: Como usamos o await lá em cima, essa linha teve que ESPERAR tudo terminar!
+    alert("Passo 2 original: Dentro da função, eu agora sou o último a executar!");
+}
+
+// Chamando a função para testar
+buscarUsuarioExemplo(1);
+
+// ALERTA BÔNUS: Fora da função assíncrona
+alert("Alerta Bônus: Eu estou FORA da função. O JavaScript não travou a página esperando o fetch, então eu executo logo depois do Passo 1!");
+</script>

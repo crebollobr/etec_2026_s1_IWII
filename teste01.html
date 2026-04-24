@@ -1,0 +1,30 @@
+<script>
+function buscarUsuarioExemplo(id_valor) {
+    
+    // 1º ALERTA: Executa na hora, de forma síncrona.
+    alert("Passo 1: Antes do fetch (O pedido vai começar)");
+
+    fetch(`https://jsonplaceholder.typicode.com/users/${id_valor}`)
+        .then(resposta => resposta.json())
+        .then(dados => {
+            // 3º ALERTA: Só executa quando a internet responder!
+            alert("Passo 3: Dentro do THEN (A resposta finalmentou chegou!)");
+            
+            if (dados.id) {
+                 // name.value = dados.name;
+                 alert("Preenchendo dados de: " + dados.name);
+            } else {
+                alert("Usuário não encontrado.");
+            }
+        })
+        .catch(() => {
+            alert("Erro na requisição.");
+        });
+
+    // 2º ALERTA: Executa ANTES da resposta chegar!
+    alert("Passo 2: Depois do comando fetch (O JavaScript não ficou esperando!)");
+}
+
+// Chamando a função para testar
+buscarUsuarioExemplo(1);
+</script>
